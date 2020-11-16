@@ -34,7 +34,7 @@ header {
 
   h1 {
     font-weight: bold;
-    font-size: 2rem;
+    font-size: 1.5rem;
     margin-right: 1rem;
     color: $contrast-color;
   }
@@ -42,11 +42,6 @@ header {
   // hide the unsightly file input
   input[type='file'] {
     display: none;
-  }
-
-  #info {
-    margin-left: 1rem;
-    font-size: 1.3rem;
   }
 }
 
@@ -91,4 +86,9 @@ main {
     align-items: center;
     z-index: 1;
   }
+}
+
+#info {
+  font-size: 1.3rem;
+  margin-top: 0.3rem;
 }
