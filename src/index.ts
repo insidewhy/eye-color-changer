@@ -1,4 +1,4 @@
-import clmtrackr from 'clmtrackr'
+import * as faceapi from 'face-api.js'
 
 import 'destyle.css'
 import './index.scss'
@@ -22,6 +22,7 @@ function loaded() {
     const img = new Image()
     img.onload = () => {
       drawImage(worker, canvas, img)
+      detectFace(canvas)
       worker.onmessage = redraw
       uploadButton.style.display = 'none'
     }
@@ -47,20 +48,32 @@ function drawImage(worker: Worker, canvas: HTMLCanvasElement, img: HTMLImageElem
   const ctxt = canvas.getContext('2d')
   ctxt.drawImage(img, 0, 0)
 
-  const tracker = new clmtrackr.tracker({
-    stopOnConvergence: true,
-    faceDetection: {
-      useWebWorkers: false,
-    },
-  })
-  tracker.init()
-  tracker.start(canvas)
-
-  document.addEventListener('clmtrackrConverged', () => {
-    tracker.draw(canvas)
-  })
   // const { data, width, height } = ctxt.getImageData(0, 0, canvas.width, canvas.height)
   // worker.postMessage({ type: 'load-image', imageData: data, width, height })
+}
+
+async function detectFace(canvas: HTMLCanvasElement) {
+  const info = document.querySelector('#info')
+  info.innerHTML = 'Detecting face'
+
+  const modelUrl = './models'
+  await faceapi.loadSsdMobilenetv1Model(modelUrl)
+  await faceapi.loadAgeGenderModel(modelUrl)
+  await faceapi.loadFaceLandmarkModel(modelUrl)
+  const faceAgeAndGender = await faceapi.detectSingleFace(canvas).withAgeAndGender()
+  if (!faceAgeAndGender) {
+    info.innerHTML = 'No face detected :('
+  } else {
+    console.log(faceAgeAndGender)
+    const { gender } = faceAgeAndGender
+    const age = Math.floor(faceAgeAndGender.age)
+    info.innerHTML = `Detected ${age} year old ${gender}`
+
+    const faceLandmarks = await faceapi.detectSingleFace(canvas).withFaceLandmarks()
+    if (faceLandmarks) {
+      faceapi.draw.drawFaceLandmarks(canvas, faceLandmarks)
+    }
+  }
 }
 
 if (document.readyState === 'complete') {

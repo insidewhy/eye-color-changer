@@ -3,9 +3,9 @@
   "description": "picture smusher",
   "license": "MIT",
   "devDependencies": {
-    "@types/clmtrackr": "^1.1.0",
     "@typescript-eslint/eslint-plugin": "^4.7.0",
     "@typescript-eslint/parser": "^4.7.0",
+    "copy-webpack-plugin": "^6.3.1",
     "css-loader": "^5.0.1",
     "eslint": "^7.13.0",
     "eslint-config-prettier": "^6.15.0",
@@ -28,10 +28,10 @@
     "start": "webpack serve",
     "build": "webpack",
     "lint": "eslint src/*.ts",
-    "upload": "yarn build && rsync -aP dist/ c:projects/chilon.net/smushing"
+    "upload": "yarn build && rsync -aP dist/ c:projects/chilon.net/eye-color"
   },
   "dependencies": {
-    "clmtrackr": "^1.1.2",
-    "destyle.css": "^2.0.2"
+    "destyle.css": "^2.0.2",
+    "face-api.js": "^0.22.2"
   }
 }

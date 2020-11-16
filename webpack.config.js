@@ -1,6 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   entry: './src/index.ts',
@@ -34,6 +35,10 @@ module.exports = {
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
+    // suppress warning in face-api.js
+    fallback: {
+      fs: false,
+    },
   },
   output: {
     filename: 'bundle.js',
@@ -50,5 +55,8 @@ module.exports = {
       title: 'eye color changer',
     }),
     new ForkTsCheckerWebpackPlugin(),
+    new CopyPlugin({
+      patterns: [{ from: 'public', to: '.' }],
+    }),
   ],
 }

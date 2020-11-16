@@ -43,6 +43,11 @@ header {
   input[type='file'] {
     display: none;
   }
+
+  #info {
+    margin-left: 1rem;
+    font-size: 1.3rem;
+  }
 }
 
 // send the click through from this button to the hidden file input
