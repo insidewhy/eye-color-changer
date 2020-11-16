@@ -2,6 +2,8 @@ type WorkerMessage =
   | {
       type: 'load-image'
       imageData: Uint8ClampedArray
+      width: number
+      height: number
     }
   | { type: 'stop' }
 
@@ -63,10 +65,10 @@ function hsvToRgb(h: number, s: number, v: number) {
 class EyeColorChanger {
   private stopped = false
 
-  constructor(private rgbaData: Uint8ClampedArray) {}
+  constructor(private rgbaData: Uint8ClampedArray, private width: number, private height: number) {}
 
   loadImage() {
-    // TODO: find eye position
+    // TODO:
   }
 
   stop() {
@@ -82,7 +84,7 @@ self.addEventListener('message', ({ data }: MessageEvent<WorkerMessage>) => {
       if (eyeColorChanger) {
         eyeColorChanger.stop()
       }
-      eyeColorChanger = new EyeColorChanger(data.imageData)
+      eyeColorChanger = new EyeColorChanger(data.imageData, data.width, data.height)
       eyeColorChanger.loadImage()
       break
 

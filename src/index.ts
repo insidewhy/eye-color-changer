@@ -1,5 +1,8 @@
+import clmtrackr from 'clmtrackr'
+
 import 'destyle.css'
 import './index.scss'
+
 import EyeColorWorker from './index.worker'
 
 function loaded() {
@@ -43,8 +46,21 @@ function drawImage(worker: Worker, canvas: HTMLCanvasElement, img: HTMLImageElem
   canvas.height = img.height
   const ctxt = canvas.getContext('2d')
   ctxt.drawImage(img, 0, 0)
-  const { data } = ctxt.getImageData(0, 0, canvas.width, canvas.height)
-  worker.postMessage({ type: 'load-image', imageData: data })
+
+  const tracker = new clmtrackr.tracker({
+    stopOnConvergence: true,
+    faceDetection: {
+      useWebWorkers: false,
+    },
+  })
+  tracker.init()
+  tracker.start(canvas)
+
+  document.addEventListener('clmtrackrConverged', () => {
+    tracker.draw(canvas)
+  })
+  // const { data, width, height } = ctxt.getImageData(0, 0, canvas.width, canvas.height)
+  // worker.postMessage({ type: 'load-image', imageData: data, width, height })
 }
 
 if (document.readyState === 'complete') {

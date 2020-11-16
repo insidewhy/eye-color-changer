@@ -3,6 +3,7 @@
   "description": "picture smusher",
   "license": "MIT",
   "devDependencies": {
+    "@types/clmtrackr": "^1.1.0",
     "@typescript-eslint/eslint-plugin": "^4.7.0",
     "@typescript-eslint/parser": "^4.7.0",
     "css-loader": "^5.0.1",
@@ -30,6 +31,7 @@
     "upload": "yarn build && rsync -aP dist/ c:projects/chilon.net/smushing"
   },
   "dependencies": {
+    "clmtrackr": "^1.1.2",
     "destyle.css": "^2.0.2"
   }
 }
