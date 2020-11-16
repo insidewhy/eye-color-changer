@@ -1,5 +1,5 @@
-# smushing
+# eye-color-changer
 
-This project is for smushing pictures.
+This project is for changing the color of your eyes.
 
-Go yonder to [http://chilon.net/smushing](http://chilon.net/smushing) and smush.
+It is running at [http://chilon.net/eye-color-changer](http://chilon.net/eye-color-changer).
